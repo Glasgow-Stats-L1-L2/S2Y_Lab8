@@ -56,14 +56,78 @@ In Model 2, we see that the $p$-value for `RDS` is larger than 0.05, meaning tha
 In Model 3, we see that the $p$-value for `GA` is smaller than 0.05, meaning that including `GA` is useful in predicting `Lrate`. Therefore, the most appropriate model, among different regression lines, parallel regression lines and a single regression line, for this dataset is the single regression line model. 
 `r unhide()`
 
-2. Construct confidence intervals to compare the models. 
+3. Looking at the following `R` output, answer the following questions.
+
+(a) Two simple linear regression models are fitted to the data, one for babies who do not suffer from RDS (group 1)  and the other one for babies with RDS (group 2), and the associated `R` output was shown below.
+```{r echo=FALSE}
+attach(rds)
+summary(lm(Lrate[RDS==1] ~ GA[RDS==1]))
+summary(lm(Lrate[RDS==2] ~ GA[RDS==2]))
+detach(rds)
+```
+
+Use the `R` output to deduce the least squares estimates for parameters in the separate regression lines model, i.e. $\hat{\alpha}_1$, $\hat{\beta}_1$, $\hat{\alpha}_2$, $\hat{\alpha}_2$ in the following model
+
+<p align="center">
+Model: $Y_{ij}=\alpha_i + \beta_i x_{ij}+\epsilon_{ij},\ i=1,2,\ j=1,\ldots,n_i$,
+</p>
+
+*Enter your answers to 3 decimal places.*
+
+* $\hat{\alpha}_1$ = `r fitb(0.396)`
+* $\hat{\beta}_1$  = `r fitb(0.172)`
+* $\hat{\alpha}_2$ = `r fitb(-0.262)`
+* $\hat{\beta}_2$  = `r fitb(0.127)`
+<br>
+
+(b) The separate regression lines model was fitted to the data and the associated `R` output was shown below. 
+<p align="center">
+Model: $\mathbb{E}(Y_{ij})=\alpha_i + \beta_i (x_{ij}-\bar{x}_{i.})$,
+</p>
+where group 1 are babies without RDS and group 2 are babies with RDS. Group 1 is used as the reference level in `R` and the variable `GA` has been mean-centred before fitting the model.
+```{r echo=FALSE}
+x1 <- rds$GA[rds$RDS==1]
+x2 <- rds$GA[rds$RDS==2]
+xbar1 <- mean(x1)
+xbar2 <- mean(x2)
+GA <- rds$GA
+GA[rds$RDS==1] <- GA[rds$RDS==1] - xbar1
+GA[rds$RDS==2] <- GA[rds$RDS==2] - xbar2
+Model1_b <- lm(rds$Lrate ~ GA * as.factor(rds$RDS))
+summary(Model1_b)
+```
+
+Write down the least squares estimates for parameters in the separate regression lines model. *Enter your answers to 3 decimal places.*
+
+* $\hat{\alpha}_1$ = `r fitb(0.396)`
+* $\hat{\beta}_1$  = `r fitb(0.172)`
+* $\hat{\alpha}_2$ = `r fitb(-0.262)`
+* $\hat{\beta}_2$  = `r fitb(0.127)`
+<br>
+
+(c) The parallel regression lines model was fitted to the data and the associated `R` output was shown below. 
+<p align="center">
+Model: $\mathbb{E}(Y_{ij})=\alpha_i + \beta (x_{ij}-\bar{x}_{i.})$,
+</p>
+where group 1 are babies without RDS and group 2 are babies with RDS. Group 1 is used as the reference level in `R` and the variable `GA` has been mean-centred before fitting the model.
+```{r}
+Model2_b <- lm(rds$Lrate ~ GA + as.factor(rds$RDS))
+summary(Model2_b)
+```
+Write down the least squares estimates for parameters in the separate regression lines model. *Enter your answers to 3 decimal places.*
+
+* $\hat{\alpha}_1$ = `r fitb(0.396)`
+* $\hat{\alpha}_2$ = `r fitb(-0.262)`
+* $\hat{\beta}$  = `r fitb(0.145)`
+<br>
+
+4. Construct confidence intervals to compare the models. 
 
 The 95% confidence interval for $(\beta_1-\beta_2)$ is (`r fitb(c("-0.1751249","-0.175125","-0.17512","-0.1751","-0.175","-0.18"))`, `r fitb(c("0.2652747","0.265275","0.26528","0.2653","0.265","0.27"))`). 
 
 The 95% confidence interval for $\alpha_1 - \alpha_2 + \beta \left(\bar{x}_{2.} - \bar{x}_{1.}\right)$ is (`r fitb(c(-0.5802435,-0.580244,-0.58024,-0.5802,-0.58))`, `r fitb(c(0.8004354,0.800435,0.80044,0.8004,0.8))`). 
 
-Among different regression lines, parallel regression lines and a single regression line, the most appropriate model for this dataset is `r mcq(c("different regression lines", "parallel regression lines", answer="a single regression line"))`,
-
+Among different regression lines, parallel regression lines and a single regression line, the most appropriate model for this dataset is `r mcq(c("the different regression lines model", "the parallel regression lines model", answer="the single regression line model"))`.
 
 `r hide("Hint")`
 The confidence interval should be constructed for $(\beta_1-\beta_2)$ in order to compare between different regression lines and parallel regression lines. 
