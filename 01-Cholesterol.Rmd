@@ -1,0 +1,195 @@
+# Example 1: Cholesterol levels in Iowa and Nebraska
+
+In a survey to examine relationships between the nutrition and the health of women in the Mid-West of the USA, the concentration of cholesterol (mg/dL) in blood serum was measured on randomly selected subjects in Iowa and Nebraska. Cholesterol is known to depend on age for these subjects. Interest lies in whether there are any differences between the measurements in Iowa and those in Nebraska.
+
+Read in the data using:
+```{r}
+cholest <- read.csv("cholest2.csv")
+```
+
+The dataset contains four columns:
+
+|    C1:    Age
+|    C2:    Cholesterol level
+|    C3:    State (1 = Iowa, 2 = Nebraska)
+|    C4:    State name
+
+<br>
+**Question of interest**: Are there any differences between the cholesterol measurements in Iowa and those in Nebraska?
+
+## Exploratory analysis
+
+Produce a plot of cholesterol against age, labelled by state, using the commands:
+```{r CholPlot, fig.align='center',out.width="70%", fig.cap="Scatterplot of cholesterol level against age."}
+plot(Cholesterol ~ Age, pch = State, data = cholest, col = State,
+     xlab = "Age (years)", ylab = "Cholesterol (mg/dl)", cex = 1.5)
+
+legend("topleft", legend = c("Iowa", "Nebraska"), pch = 1:2,
+       horiz = TRUE, bty = "n", cex = 1.2, col = 1:2)
+```
+
+**COMMENT**: What can you conclude from Figure \@ref(fig:CholPlot)? Do you think that the relationship between cholesterol and age is completely different in each state? Do you think either a parallel or single line relationship may be appropriate?
+
+## Statistical analysis
+
+Initially, a model can be fitted in `R` that allows the relationship between age and cholesterol to be completely different for each state. This can be done by using the command:
+```{r}
+Model1 <- lm(Cholesterol ~ Age * statename, data = cholest)
+```
+
+This fits a linear regression model between cholesterol and age where the relationship is allowed to change depending on state. Therefore, the model contains a covariate of age, a factor of state name and the interaction between state name and age. If the model with two completely separate regression lines is appropriate then we say that there is an interaction (and the interaction term would be statistically significant). An interaction would tell us that the relationship between cholesterol and age is different depending on whether the population of interest is Iowa or Nebraska.
+
+In order to assess this, the output of most interest to us here is in the analysis of variance table obtained using:
+```{r}
+anova(Model1)
+```
+
+**QUESTION**: Based on the ANOVA table, what can we say about the significance of the interaction term?
+
+`r longmcq(c("The $p$-value for Age is 2.388e-05, and thus the interaction term is statistically significant.<br>", "The $p$-value for statename is 0.09877, and thus the interaction term is statistically insignificant.<br>", answer="The $p$-value for Age:statename is 0.54247, and thus the interaction term is statistically insignificant.<br>"))`
+
+What does the significance of the interaction term tell us about the model selection?
+`r longmcq(c("We should choose different regression lines.", answer="We should fit parallel regression lines and test if this is appropriate. <br>", "We should fit a single regression line and test if this is appropriate."))`
+<br>
+
+Since the interaction term is not statistically significant (0.542) we then fit a model which assumes parallel lines:
+```{r}
+Model2 <- lm(Cholesterol ~ Age + statename, data = cholest)
+anova(Model2)
+```
+
+**QUESTION**: Which of the following interpretations is appropriate about the ANOVA table?
+
+`r longmcq(c("The $p$-value for Age is statistically significant, and hence the current model is appropriate.<br>", "The $p$-value for Age is statistically insignificant, and hence we should fit a single regression line and check if this model is appropriate.<br>", "The $p$-value for statename is statistically significant, and hence the current model is appropriate.<br>", answer="The $p$-value for statename is statistically insignificant, and hence we should fit a single regression line and check if this model is appropriate."))`
+<br>
+
+Since the $p$-value for the factor `statename` is not statistically significant (0.095), a single regression line may be appropriate for the data.
+
+**QUESTION**: Fit a single regression line to this dataset and comment on its appropriateness.
+
+`r hide("Hint")`
+This is simply the simple linear regression model we learned about in previous weeks. Fit using `lm` and `Cholesterol` as the response variable and `Age` as the predictor variable. 
+`r unhide()`
+
+`r hide("Solution")`
+```{r}
+Model3 <- lm(Cholesterol ~ Age, data = cholest)
+anova(Model3)
+```
+Since the $p$-value for `Age` is 2.673e-05, which is much smaller than 0.05, we can conclude that `Age` is useful in predicting cholesterol level and hence a single regression line is appropriate. 
+`r unhide()`
+<br>
+
+The final model (`Model3`) regression line can be superimposed onto Figure \@ref(fig:CholPlot) using
+```{r eval=FALSE}
+abline(Model3)
+```
+
+```{r CholPlot2, fig.align='center',out.width="70%", fig.cap="Scatterplot of cholesterol level against age."}
+plot(Cholesterol ~ Age, pch = State, data = cholest, col = State,
+     xlab = "Age (years)", ylab = "Cholesterol (mg/dl)", cex = 1.5)
+
+legend("topleft", legend = c("Iowa", "Nebraska"), pch = 1:2,
+       horiz = TRUE, bty = "n", cex = 1.2, col = 1:2)
+abline(Model3)
+```
+
+Figure \@ref(fig:CholPlot2) shows the fitted regression line from `Model3` superimposed onto the scatterplot of cholesterol level and age. While skipped here, the assumptions of this simple linear regression model should be checked. 
+
+The above analysis could also be performed by computing confidence intervals to investigate differences between the regression lines.
+
+## Confidence intervals
+
+Confidence intervals can be used to compare the models. To compare the full model with completely separate lines to the parallel lines model, we compute a confidence interval that compares the slopes.
+
+The 95% confidence interval for $\left(\beta_1 - \beta_2\right)$ is
+\[(\hat{\beta}_1-\hat{\beta}_2) \pm t(n_1+n_2-4; 0.975)\sqrt{\left(\frac{\text{RSS}_1+\text{RSS}_2}{n_1+n_2-4}\right)\left(\frac{1}{S_{x_1x_1}}+\frac{1}{S_{x_2x_2}}\right)}\]
+
+To compute the 95% confidence interval we first need to obtain its components. We can obtain $\hat{\beta}_1$ and $\hat{\beta}_2$ from 
+```{r}
+coef(Model1)
+```
+
+which gives us the model estimates of the coefficients. Here, Iowa is taken as the 'reference' state (due to being coded as 1, while Nebraska is 2), and so its slope parameter, $\hat{\beta}_1$, is given by
+```{r}
+beta1 <- coef(Model1)[2]
+```
+
+The number in the square brackets picks out the element of interest. The slope for Nebraska ($\hat{\beta}_2$) is found by adding together the coefficients of age and its state interaction, such that
+
+```{r}
+beta2 <- coef(Model1)[2] + coef(Model1)[4]
+```
+
+The $t$-value can be obtained using the commands
+```{r}
+n1 <- sum(cholest$State == 1)
+n2 <- sum(cholest$State == 2)
+p <- 4
+t.val <- qt(p = 0.975, df = (n1 + n2 - p))
+```
+
+The residual sum of squares, $\text{RSS} = \text{RSS}_1 + \text{RSS}_2$, can be found from the analysis of variance table using the following command
+```{r}
+RSS <- anova(Model1)[4, 2]
+```
+
+Now, we just need to find the sum of squares, $S_{x_1 x_1}$ and $S_{x_2 x_2}$, for each state, which can be done using
+```{r}
+x1 <- cholest[cholest$State == 1, 1]
+x2 <- cholest[cholest$State == 2, 1]
+
+xbar1 <- mean(x1)
+xbar2 <- mean(x2)
+
+Sx1x1 <- sum((x1 - xbar1)^2)
+Sx2x2 <- sum((x2 - xbar2)^2)
+ese <- sqrt(((RSS)/(n1+n2-p)) * ((1/Sx1x1)+(1/Sx2x2)))
+```
+
+We can now obtain the 95% confidence interval for the difference in slopes using the following commands
+```{r}
+lower <- (beta1-beta2) - t.val * ese
+upper <- (beta1-beta2) + t.val * ese
+
+int <- c(lower, upper)
+```
+
+**COMMENT**: The 95% confidence interval for the difference in slopes is (-1.67, 3.11). What does this tell us about fitting different regression lines for the two states? Does it tell us anything about potential differences between the two states?
+<br>
+
+To compare the parallel lines model and the single regression line model, we compute a 95\% confidence interval for the difference between parallel regression lines:
+
+\[ \hat{\alpha}_1-\hat{\alpha}_2+\hat{\beta}(\bar{x}_{2.}-\bar{x}_{1.}) \pm
+t(n_1 + n_2 - 3,0.975)
+\sqrt{\left(\frac{\text{RSS}}{n_1 + n_2 - 3}\right)\left(\frac{1}{n_1}+\frac{1}{n_2}+\frac{(\bar{x}_{2.}-\bar{x}_{1.})^2}{S_{x_1x_1}+S_{x_2x_2}}\right)}\]
+
+We need to be careful not to compute the confidence interval in a similar way to the previous one, with just using the coefficient estimates from `Model2`. This is because the least squares estimates of parameters, given in **Introduction** (Section \@ref(intro)), are derived after reparameterising the model by mean centering age. However, we did not reparameterise `Model2`, and therefore, the estimates of intercepts, $\hat{\alpha}_1$ and $\hat{\alpha}_2$, will be different from the formula. One way of reparameterising `Model2` can be done by using the following commands:
+```{r}
+Y <- cholest$Cholesterol
+Age <- cholest$Age
+Age[cholest$State == 1] <- Age[cholest$State == 1] - xbar1
+Age[cholest$State == 2] <- Age[cholest$State == 2] - xbar2
+Model2 <- lm(Y ~ Age + cholest$statename)
+```
+
+Here `Age` is our reparameterised age variable, where we have subtracted from age the corresponding state means. We can now obtain the 95% confidence interval for the difference between parallel regression lines using the following commands:
+```{r}
+alpha1 <- coef(Model2)[1]
+alpha2 <- coef(Model2)[1] + coef(Model2)[3]
+beta <- coef(Model2)[2]
+
+p <- 3
+t.val <- qt(p = 0.975, df = (n1 + n2 - p))
+
+RSS <- anova(Model2)[3, 2]
+ese <- sqrt((RSS/(n1+n2-p))*((1/n1)+(1/n2)+((xbar2-xbar1)^2/(Sx1x1+Sx2x2))))
+
+lower <- alpha1-alpha2+(beta*(xbar2-xbar1)) - t.val * ese
+upper <- alpha1-alpha2+(beta*(xbar2-xbar1)) + t.val * ese
+
+int <- c(lower, upper)
+```
+
+**COMMENT**: The 95% confidence interval for the difference between parallel lines is (-62.59, 5.29). What does this tell us about fitting parallel lines for the two states? 
+

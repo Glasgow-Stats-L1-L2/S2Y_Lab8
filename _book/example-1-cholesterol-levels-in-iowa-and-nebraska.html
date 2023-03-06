@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Example 1: Cholesterol levels in Iowa and Nebraska | _main.knit</title>
+  <meta name="description" content="S2Y Lab 8<br />
+Comparing regression lines</div>" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Example 1: Cholesterol levels in Iowa and Nebraska | _main.knit" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Example 1: Cholesterol levels in Iowa and Nebraska | _main.knit" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="example-2-respiratory-distress-syndrome.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Welcome to S2Y Lab 8</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#intro"><i class="fa fa-check"></i><b>1.1</b> Introduction</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="example-1-cholesterol-levels-in-iowa-and-nebraska.html"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html"><i class="fa fa-check"></i><b>2</b> Example 1: Cholesterol levels in Iowa and Nebraska</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="example-1-cholesterol-levels-in-iowa-and-nebraska.html"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#exploratory-analysis"><i class="fa fa-check"></i><b>2.1</b> Exploratory analysis</a></li>
+<li class="chapter" data-level="2.2" data-path="example-1-cholesterol-levels-in-iowa-and-nebraska.html"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#statistical-analysis"><i class="fa fa-check"></i><b>2.2</b> Statistical analysis</a></li>
+<li class="chapter" data-level="2.3" data-path="example-1-cholesterol-levels-in-iowa-and-nebraska.html"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#confidence-intervals"><i class="fa fa-check"></i><b>2.3</b> Confidence intervals</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="example-2-respiratory-distress-syndrome.html"><a href="example-2-respiratory-distress-syndrome.html"><i class="fa fa-check"></i><b>3</b> Example 2: Respiratory Distress Syndrome</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"><div class="line-block">S2Y Lab 8<br />
+Comparing regression lines</div></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="example-1-cholesterol-levels-in-iowa-and-nebraska" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Example 1: Cholesterol levels in Iowa and Nebraska<a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#example-1-cholesterol-levels-in-iowa-and-nebraska" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In a survey to examine relationships between the nutrition and the health of women in the Mid-West of the USA, the concentration of cholesterol (mg/dL) in blood serum was measured on randomly selected subjects in Iowa and Nebraska. Cholesterol is known to depend on age for these subjects. Interest lies in whether there are any differences between the measurements in Iowa and those in Nebraska.</p>
+<p>Read in the data using:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb1-1" aria-hidden="true" tabindex="-1"></a>cholest <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;cholest2.csv&quot;</span>)</span></code></pre></div>
+<p>The dataset contains four columns:</p>
+<div class="line-block">   C1: Age<br />
+   C2: Cholesterol level<br />
+   C3: State (1 = Iowa, 2 = Nebraska)<br />
+   C4: State name</div>
+<p><br>
+<strong>Question of interest</strong>: Are there any differences between the cholesterol measurements in Iowa and those in Nebraska?</p>
+<div id="exploratory-analysis" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Exploratory analysis<a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#exploratory-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Produce a plot of cholesterol against age, labelled by state, using the commands:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Cholesterol <span class="sc">~</span> Age, <span class="at">pch =</span> State, <span class="at">data =</span> cholest, <span class="at">col =</span> State,</span>
+<span id="cb2-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb2-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Age (years)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Cholesterol (mg/dl)&quot;</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb2-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Iowa&quot;</span>, <span class="st">&quot;Nebraska&quot;</span>), <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb2-5"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">cex =</span> <span class="fl">1.2</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:CholPlot"></span>
+<img src="_main_files/figure-html/CholPlot-1.png" alt="Scatterplot of cholesterol level against age." width="70%" />
+<p class="caption">
+Figure 2.1: Scatterplot of cholesterol level against age.
+</p>
+</div>
+<p><strong>COMMENT</strong>: What can you conclude from Figure <a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#fig:CholPlot">2.1</a>? Do you think that the relationship between cholesterol and age is completely different in each state? Do you think either a parallel or single line relationship may be appropriate?</p>
+</div>
+<div id="statistical-analysis" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Statistical analysis<a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#statistical-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Initially, a model can be fitted in <code>R</code> that allows the relationship between age and cholesterol to be completely different for each state. This can be done by using the command:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb3-1" aria-hidden="true" tabindex="-1"></a>Model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cholesterol <span class="sc">~</span> Age <span class="sc">*</span> statename, <span class="at">data =</span> cholest)</span></code></pre></div>
+<p>This fits a linear regression model between cholesterol and age where the relationship is allowed to change depending on state. Therefore, the model contains a covariate of age, a factor of state name and the interaction between state name and age. If the model with two completely separate regression lines is appropriate then we say that there is an interaction (and the interaction term would be statistically significant). An interaction would tell us that the relationship between cholesterol and age is different depending on whether the population of interest is Iowa or Nebraska.</p>
+<p>In order to assess this, the output of most interest to us here is in the analysis of variance table obtained using:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(Model1)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Cholesterol
+##               Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Age            1  48976   48976 26.3124 2.388e-05 ***
+## statename      1   5456    5456  2.9315   0.09877 .  
+## Age:statename  1    709     709  0.3809   0.54247    
+## Residuals     26  48395    1861                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><strong>QUESTION</strong>: Based on the ANOVA table, what can we say about the significance of the interaction term?</p>
+<div id="radio_VMFNLKKINC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VMFNLKKINC" value=""></input> <span>The <span class="math inline">\(p\)</span>-value for Age is 2.388e-05, and thus the interaction term is statistically significant.<br></span></label><label><input type="radio" autocomplete="off" name="radio_VMFNLKKINC" value=""></input> <span>The <span class="math inline">\(p\)</span>-value for statename is 0.09877, and thus the interaction term is statistically insignificant.<br></span></label><label><input type="radio" autocomplete="off" name="radio_VMFNLKKINC" value="answer"></input> <span>The <span class="math inline">\(p\)</span>-value for Age:statename is 0.54247, and thus the interaction term is statistically insignificant.<br></span></label>
+</div>
+What does the significance of the interaction term tell us about the model selection?
+<div id="radio_ITRHYWCGCC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ITRHYWCGCC" value=""></input> <span>We should choose different regression lines <br></span></label><label><input type="radio" autocomplete="off" name="radio_ITRHYWCGCC" value="answer"></input> <span>We should fit parallel regression lines and test if this is appropriate. <br></span></label><label><input type="radio" autocomplete="off" name="radio_ITRHYWCGCC" value=""></input> <span>We should fit a single regression line and test if this is appropriate.</span></label>
+</div>
+<p><br></p>
+<p>Since the interaction term is not statistically significant (0.542) we then fit a model which assumes parallel lines:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb6-1" aria-hidden="true" tabindex="-1"></a>Model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cholesterol <span class="sc">~</span> Age <span class="sc">+</span> statename, <span class="at">data =</span> cholest)</span>
+<span id="cb6-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(Model2)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Cholesterol
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Age        1  48976   48976 26.9298 1.831e-05 ***
+## statename  1   5456    5456  3.0003   0.09466 .  
+## Residuals 27  49104    1819                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p><strong>QUESTION</strong>: Which of the following interpretations is appropriate about the ANOVA table?</p>
+<div id="radio_JGNOELRLPB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JGNOELRLPB" value=""></input> <span>The <span class="math inline">\(p\)</span>-value for Age is statistically significant, and hence the current model is appropriate.<br></span></label><label><input type="radio" autocomplete="off" name="radio_JGNOELRLPB" value=""></input> <span>The <span class="math inline">\(p\)</span>-value for Age is statistically insignificant, and hence we should fit a single regression line and check if this model is appropriate.<br></span></label><label><input type="radio" autocomplete="off" name="radio_JGNOELRLPB" value=""></input> <span>The <span class="math inline">\(p\)</span>-value for statename is statistically significant, and hence the current model is appropriate.<br></span></label><label><input type="radio" autocomplete="off" name="radio_JGNOELRLPB" value="answer"></input> <span>The <span class="math inline">\(p\)</span>-value for statename is statistically insignificant, and hence we should fit a single regression line and check if this model is appropriate.<br></span></label>
+</div>
+<p>Since the <span class="math inline">\(p\)</span>-value for the factor <code>statename</code> is not statistically significant (0.095), a single regression line may be appropriate for the data.</p>
+<p><strong>QUESTION</strong>: Fit a single regression line to this dataset and comment on its appropriateness.</p>
+<div class="webex-solution">
+<button>
+Hint
+</button>
+<p>This is simply the simple linear regression model we learned about in previous weeks. Fit using <code>lm</code> and <code>Cholesterol</code> as the response variable and <code>Age</code> as the predictor variable.</p>
+</div>
+<div class="webex-solution">
+<button>
+Solution
+</button>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb8-1" aria-hidden="true" tabindex="-1"></a>Model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Cholesterol <span class="sc">~</span> Age, <span class="at">data =</span> cholest)</span>
+<span id="cb8-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(Model3)</span></code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: Cholesterol
+##           Df Sum Sq Mean Sq F value    Pr(&gt;F)    
+## Age        1  48976   48976  25.134 2.673e-05 ***
+## Residuals 28  54560    1949                      
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>Since the <span class="math inline">\(p\)</span>-value for <code>Age</code> is 2.673e-05, which is much smaller than 0.05, we can conclude that <code>Age</code> is useful in predicting cholesterol level and hence a single regression line is appropriate.</p>
+</div>
+<p>The final model (<code>Model3</code>) regression line can be superimposed onto Figure <a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#fig:CholPlot">2.1</a> using</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(Model3)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Cholesterol <span class="sc">~</span> Age, <span class="at">pch =</span> State, <span class="at">data =</span> cholest, <span class="at">col =</span> State,</span>
+<span id="cb11-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb11-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">&quot;Age (years)&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Cholesterol (mg/dl)&quot;</span>, <span class="at">cex =</span> <span class="fl">1.5</span>)</span>
+<span id="cb11-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Iowa&quot;</span>, <span class="st">&quot;Nebraska&quot;</span>), <span class="at">pch =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,</span>
+<span id="cb11-5"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb11-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">horiz =</span> <span class="cn">TRUE</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>, <span class="at">cex =</span> <span class="fl">1.2</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb11-6"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(Model3)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:CholPlot2"></span>
+<img src="_main_files/figure-html/CholPlot2-1.png" alt="Scatterplot of cholesterol level against age." width="70%" />
+<p class="caption">
+Figure 2.2: Scatterplot of cholesterol level against age.
+</p>
+</div>
+<p>Figure <a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#fig:CholPlot2">2.2</a> shows the fitted regression line from <code>Model3</code> superimposed onto the scatterplot of cholesterol level and age. While skipped here, the assumptions of this simple linear regression model should be checked.</p>
+<p>The above analysis could also be performed by computing confidence intervals to investigate differences between the regression lines.</p>
+</div>
+<div id="confidence-intervals" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Confidence intervals<a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Confidence intervals can be used to compare the models. To compare the full model with completely separate lines to the parallel lines model, we compute a confidence interval that compares the slopes.</p>
+<p>The 95% confidence interval for <span class="math inline">\(\left(\beta_1 - \beta_2\right)\)</span> is
+<span class="math display">\[(\hat{\beta}_1-\hat{\beta}_2) \pm t(n_1+n_2-4; 0.975)\sqrt{\left(\frac{\text{RSS}_1+\text{RSS}_2}{n_1+n_2-4}\right)\left(\frac{1}{S_{x_1x_1}}+\frac{1}{S_{x_2x_2}}\right)}\]</span></p>
+<p>To compute the 95% confidence interval we first need to obtain its components. We can obtain <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span> from</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(Model1)</span></code></pre></div>
+<pre><code>##           (Intercept)                   Age     statenameNebraska 
+##            35.8112138             3.2381449            65.4865523 
+## Age:statenameNebraska 
+##            -0.7177069</code></pre>
+<p>which gives us the model estimates of the coefficients. Here, Iowa is taken as the ‘reference’ state (due to being coded as 1, while Nebraska is 2), and so its slope parameter, <span class="math inline">\(\hat{\beta}_1\)</span>, is given by</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb14-1" aria-hidden="true" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(Model1)[<span class="dv">2</span>]</span></code></pre></div>
+<p>The number in the square brackets picks out the element of interest. The slope for Nebraska (<span class="math inline">\(\hat{\beta}_2\)</span>) is found by adding together the coefficients of age and its state interaction, such that</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb15-1" aria-hidden="true" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(Model1)[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">coef</span>(Model1)[<span class="dv">4</span>]</span></code></pre></div>
+<p>The <span class="math inline">\(t\)</span>-value can be obtained using the commands</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb16-1" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="fu">sum</span>(cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb16-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb16-2" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> <span class="fu">sum</span>(cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">2</span>)</span>
+<span id="cb16-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb16-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb16-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb16-4" aria-hidden="true" tabindex="-1"></a>t.val <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p =</span> <span class="fl">0.975</span>, <span class="at">df =</span> (n1 <span class="sc">+</span> n2 <span class="sc">-</span> p))</span></code></pre></div>
+<p>The residual sum of squares, <span class="math inline">\(\text{RSS} = \text{RSS}_1 + \text{RSS}_2\)</span>, can be found from the analysis of variance table using the following command</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb17-1" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">anova</span>(Model1)[<span class="dv">4</span>, <span class="dv">2</span>]</span></code></pre></div>
+<p>Now, we just need to find the sum of squares, <span class="math inline">\(S_{x_1 x_1}\)</span> and <span class="math inline">\(S_{x_2 x_2}\)</span>, for each state, which can be done using</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> cholest[cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb18-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> cholest[cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">1</span>]</span>
+<span id="cb18-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-4" aria-hidden="true" tabindex="-1"></a>xbar1 <span class="ot">&lt;-</span> <span class="fu">mean</span>(x1)</span>
+<span id="cb18-5"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-5" aria-hidden="true" tabindex="-1"></a>xbar2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(x2)</span>
+<span id="cb18-6"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-7" aria-hidden="true" tabindex="-1"></a>Sx1x1 <span class="ot">&lt;-</span> <span class="fu">sum</span>((x1 <span class="sc">-</span> xbar1)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb18-8"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-8" aria-hidden="true" tabindex="-1"></a>Sx2x2 <span class="ot">&lt;-</span> <span class="fu">sum</span>((x2 <span class="sc">-</span> xbar2)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb18-9"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb18-9" aria-hidden="true" tabindex="-1"></a>ese <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(((RSS)<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="sc">-</span>p)) <span class="sc">*</span> ((<span class="dv">1</span><span class="sc">/</span>Sx1x1)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>Sx2x2)))</span></code></pre></div>
+<p>We can now obtain the 95% confidence interval for the difference in slopes using the following commands</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb19-1" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> (beta1<span class="sc">-</span>beta2) <span class="sc">-</span> t.val <span class="sc">*</span> ese</span>
+<span id="cb19-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb19-2" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> (beta1<span class="sc">-</span>beta2) <span class="sc">+</span> t.val <span class="sc">*</span> ese</span>
+<span id="cb19-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb19-4" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> <span class="fu">c</span>(lower, upper)</span></code></pre></div>
+<p><strong>COMMENT</strong>: The 95% confidence interval for the difference in slopes is (-1.67, 3.11). What does this tell us about fitting different regression lines for the two states? Does it tell us anything about potential differences between the two states?
+<br></p>
+<p>To compare the parallel lines model and the single regression line model, we compute a 95% confidence interval for the difference between parallel regression lines:</p>
+<p><span class="math display">\[ \hat{\alpha}_1-\hat{\alpha}_2+\hat{\beta}(\bar{x}_{2.}-\bar{x}_{1.}) \pm
+t(n_1 + n_2 - 3,0.975)
+\sqrt{\left(\frac{\text{RSS}}{n_1 + n_2 - 3}\right)\left(\frac{1}{n_1}+\frac{1}{n_2}+\frac{(\bar{x}_{2.}-\bar{x}_{1.})^2}{S_{x_1x_1}+S_{x_2x_2}}\right)}\]</span></p>
+<p>We need to be careful not to compute the confidence interval in a similar way to the previous one, with just using the coefficient estimates from <code>Model2</code>. This is because the least squares estimates of parameters, given in <strong>Introduction</strong> (Section <a href="index.html#intro">1.1</a>), are derived after reparameterising the model by mean centering age. However, we did not reparameterise <code>Model2</code>, and therefore, the estimates of intercepts, <span class="math inline">\(\hat{\alpha}_1\)</span> and <span class="math inline">\(\hat{\alpha}_2\)</span>, will be different from the formula. One way of reparameterising <code>Model2</code> can be done by using the following commands:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb20-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> cholest<span class="sc">$</span>Cholesterol</span>
+<span id="cb20-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb20-2" aria-hidden="true" tabindex="-1"></a>Age <span class="ot">&lt;-</span> cholest<span class="sc">$</span>Age</span>
+<span id="cb20-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb20-3" aria-hidden="true" tabindex="-1"></a>Age[cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">1</span>] <span class="ot">&lt;-</span> Age[cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">1</span>] <span class="sc">-</span> xbar1</span>
+<span id="cb20-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb20-4" aria-hidden="true" tabindex="-1"></a>Age[cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> Age[cholest<span class="sc">$</span>State <span class="sc">==</span> <span class="dv">2</span>] <span class="sc">-</span> xbar2</span>
+<span id="cb20-5"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb20-5" aria-hidden="true" tabindex="-1"></a>Model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> Age <span class="sc">+</span> cholest<span class="sc">$</span>statename)</span></code></pre></div>
+<p>Here <code>Age</code> is our reparameterised age variable, where we have subtracted from age the corresponding state means. We can now obtain the 95% confidence interval for the difference between parallel regression lines using the following commands:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-1" aria-hidden="true" tabindex="-1"></a>alpha1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(Model2)[<span class="dv">1</span>]</span>
+<span id="cb21-2"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-2" aria-hidden="true" tabindex="-1"></a>alpha2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(Model2)[<span class="dv">1</span>] <span class="sc">+</span> <span class="fu">coef</span>(Model2)[<span class="dv">3</span>]</span>
+<span id="cb21-3"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-3" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">coef</span>(Model2)[<span class="dv">2</span>]</span>
+<span id="cb21-4"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-5" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb21-6"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-6" aria-hidden="true" tabindex="-1"></a>t.val <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p =</span> <span class="fl">0.975</span>, <span class="at">df =</span> (n1 <span class="sc">+</span> n2 <span class="sc">-</span> p))</span>
+<span id="cb21-7"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-8" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">anova</span>(Model2)[<span class="dv">3</span>, <span class="dv">2</span>]</span>
+<span id="cb21-9"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-9" aria-hidden="true" tabindex="-1"></a>ese <span class="ot">&lt;-</span> <span class="fu">sqrt</span>((RSS<span class="sc">/</span>(n1<span class="sc">+</span>n2<span class="sc">-</span>p))<span class="sc">*</span>((<span class="dv">1</span><span class="sc">/</span>n1)<span class="sc">+</span>(<span class="dv">1</span><span class="sc">/</span>n2)<span class="sc">+</span>((xbar2<span class="sc">-</span>xbar1)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>(Sx1x1<span class="sc">+</span>Sx2x2))))</span>
+<span id="cb21-10"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-11" aria-hidden="true" tabindex="-1"></a>lower <span class="ot">&lt;-</span> alpha1<span class="sc">-</span>alpha2<span class="sc">+</span>(beta<span class="sc">*</span>(xbar2<span class="sc">-</span>xbar1)) <span class="sc">-</span> t.val <span class="sc">*</span> ese</span>
+<span id="cb21-12"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-12" aria-hidden="true" tabindex="-1"></a>upper <span class="ot">&lt;-</span> alpha1<span class="sc">-</span>alpha2<span class="sc">+</span>(beta<span class="sc">*</span>(xbar2<span class="sc">-</span>xbar1)) <span class="sc">+</span> t.val <span class="sc">*</span> ese</span>
+<span id="cb21-13"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-14"><a href="example-1-cholesterol-levels-in-iowa-and-nebraska.html#cb21-14" aria-hidden="true" tabindex="-1"></a>int <span class="ot">&lt;-</span> <span class="fu">c</span>(lower, upper)</span></code></pre></div>
+<p><strong>COMMENT</strong>: The 95% confidence interval for the difference between parallel lines is (-62.59, 5.29). What does this tell us about fitting parallel lines for the two states?</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="example-2-respiratory-distress-syndrome.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

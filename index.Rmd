@@ -1,0 +1,106 @@
+---
+title: |
+    | S2Y Lab 8
+    | Comparing regression lines
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+---
+
+```{r setup, include = FALSE}
+library(webexercises)
+library(tinytex)
+library(dplyr)
+library(knitr)
+knitr::opts_chunk$set(echo=TRUE, eval=TRUE)
+```
+
+
+```{r include=FALSE, echo=FALSE}
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```
+
+
+# Welcome to S2Y Lab 8
+
+Intended Learning Outcomes:
+
+* use `R` to carry out an ANCOVA;
+* use `R` output for model selection when comparing regression lines; and
+* interpret confidence intervals for model selection when comparing regression lines.
+
+## Introduction {#intro}
+
+In **Chapter 4** of the lectures we looked at how to select the best linear model in the case where we have two explanatory variables, one of which is a grouping variable (factor). Three models were considered: (i) different regression lines for each group; (ii) parallel regression lines; and (iii) a single regression line. Selection was based on the calculation and interpretation of confidence intervals.
+
+Here is a reminder of some of the formulae:
+<br>
+
+**Model 1: Two different regression lines**
+
+\[\mathbb{E}(Y_{ij}) = \alpha_i+\beta_i(x_{ij}-\bar{x}_{i.}), \quad i=1,2, \quad j=1,\ldots,n_i\]
+
+The least squares estimates of the parameters are 
+\[\hat{\boldsymbol \beta} = \begin{bmatrix} \hat{\alpha}_1  \\[0.3em] \hat{\beta}_1 \\[0.3em] \hat{\alpha}_2 \\[0.3em] \hat{\beta}_2\end{bmatrix} = \begin{bmatrix} \bar{y}_{1.}  \\[0.3em] \frac{S_{x_1 y_1}}{S_{x_1 x_1}} \\[0.3em] \bar{y}_{2.} \\[0.3em] \frac{S_{x_2 y_2}}{S_{x_2 x_2}}\end{bmatrix}\]
+
+and the residual sum of squares can be written as
+
+$$\text{RSS} = \text{RSS}_1 + \text{RSS}_2,$$
+
+where $$\text{RSS}_1 = S_{y_1 y_1} - \frac{\left(S_{x_1 y_1}\right)^2}{S_{x_1 x_1}} \quad\quad \text{and} \quad\quad \text{RSS}_2 = S_{y_2 y_2} - \frac{\left(S_{x_2 y_2}\right)^2}{S_{x_2 x_2}}.$$
+
+The equations for the parameters are identical to those which are found when a separate straight line is fitted individually to the two groups, with $\text{RSS}_1$ and $\text{RSS}_2$ the residual sums of squares from fitting individual regression lines to each group.
+
+Recall that in order to determine if a model with parallel lines is adequate, we need to construct a 95% confidence interval for $(\beta_1 - \beta_2)$ using the standard formula:
+
+\[\mathbf{b}^\top\boldsymbol{\hat{\beta}} \pm t(n-p; 0.975)\sqrt{\frac{\text{RSS}}{n-p}\mathbf{b}^\top(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{b}},\]
+
+That is,
+
+\[(\hat{\beta}_1-\hat{\beta}_2) \pm t(n_1+n_2-4; 0.975)\sqrt{\left(\frac{\text{RSS}_1+\text{RSS}_2}{n_1+n_2-4}\right)\left(\frac{1}{S_{x_1x_1}}+\frac{1}{S_{x_2x_2}}\right)}.\]
+
+If the confidence interval for $\beta_1 - \beta_2$ includes 0, there is insufficient evidence of a difference in the slopes. We will go on to fit the parallel lines model.
+<br>
+
+**Model 2: Two parallel regression lines**
+
+\[\mathbb{E}(Y_{ij}) = \alpha_i+\beta(x_{ij}-\bar{x}_{i.}), \quad i=1,2, \quad j=1,\ldots,n_i\]
+
+Here the least squares estimates of the parameters are 
+
+$$\hat{\boldsymbol \beta} = \begin{bmatrix} \hat{\alpha}_1 \\[0.3em] \hat{\alpha}_2 \\[0.3em] \hat{\beta}\end{bmatrix} = \begin{bmatrix} \bar{y}_{1.}   \\[0.3em] \bar{y}_{2.} \\[0.3em] \frac{S_{x_1 y_1} + S_{x_2 y_2}}{S_{x_1 x_1} + S_{x_2 x_2}}\end{bmatrix}$$
+
+and the residual sum of squares is given as
+
+$$\text{RSS} = S_{y_1 y_1} + S_{y_2 y_2}  - \frac{\left(S_{x_1 y_1} + S_{x_2 y_2}\right)^2}{S_{x_1 x_1} + S_{x_2 x_2}}.$$
+
+By constructing a confidence interval for the difference between the regression lines, $\alpha_1 - \alpha_2 + \beta \left(\bar{x}_{2.} - \bar{x}_{1.}\right)$, and examining whether this interval includes 0, we can assess whether a single straight line, with no difference between the groups, is adequate for the data.
+
+The 95% confidence interval has the form
+
+\[\mathbf{b}^\top\boldsymbol{\hat{\beta}} \pm t(n_1 + n_2 - 3; 0.975)\sqrt{\frac{\text{RSS}}{n_1 + n_2 - 3}\mathbf{b}^\top(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{b}},\]
+
+with $\mathbf{b}^\top = \begin{bmatrix} 1 & -1 & \left(\bar{x}_{2.} - \bar{x}_{1.}\right) \end{bmatrix}$. That is, 
+
+\[\hat{\alpha}_1-\hat{\alpha}_2+\hat{\beta}(\bar{x}_{2.}-\bar{x}_{1.}) \pm
+t(n_1 + n_2 - 3,0.975)
+\sqrt{\left(\frac{\text{RSS}}{n_1 + n_2 - 3}\right)\left(\frac{1}{n_1}+\frac{1}{n_2}+\frac{(\bar{x}_{2.}-\bar{x}_{1.})^2}{S_{x_1x_1}+S_{x_2x_2}}\right)}.\]
+
+If the confidence interval includes 0, there is insufficient evidence of a difference between the regression lines. We will then go on to fit a single regression line. 
+<br>
+
+**Model 3: Single regression line**
+\[\mathbb{E}(Y_{ij}) = \alpha + \beta(x_{ij}-\bar{x}_{i.}), \quad i=1,2, \quad j=1,\ldots,n_i\]
+
+The parameter estimates are then
+
+$$\hat{\boldsymbol \beta} = \begin{bmatrix} \hat{\alpha} \\[0.3em] \hat{\beta}\end{bmatrix} = \begin{bmatrix} \bar{y}_{..}   \\[0.3em] \frac{S_{x y}}{S_{x x}}\end{bmatrix}$$
+
+In this lab the main focus will be on how to perform an analysis of covariance (ANCOVA) in `R`. However, we will also consider the interpretation of the above confidence intervals. Performing ANCOVA in `R` will provide $p$-values, which allow us to compare the three models of interest.
+
+
+

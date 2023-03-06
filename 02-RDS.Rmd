@@ -1,0 +1,144 @@
+# Example 2: Respiratory Distress Syndrome
+
+We have seen this example in Lecture 15. To recap, premature babies often suffer from a variety of problems and respiratory distress syndrome (RDS) is a major one of these problems. It is thought that the occurrence of this syndrome might be related to a property of the blood called red cell deformability. This refers to the ability of red cells to change shape to pass through small pores. The rate (Lrate, on a log scale) of blood flow through a set of 3$\mu$m pores has been recorded for two groups of babies, some of whom suffer from respiratory distress syndrome (RDS = 2) and some who do not (RDS = 1). The gestational age (GA) in weeks of each baby is also recorded. These data were kindly provided by Queen Mother's Hospital, Glasgow. 
+
+Read in the data using:
+```{r}
+rds <- read.csv("respiratory.csv")
+```
+
+The dataset contains three columns:
+
+|    C1:    Lrate
+|    C2:    GA
+|    C3:    RDS (1 = does not suffer from RDS, 2 = suffers from RDS)
+
+<br>
+Use what you have learned from **Example 1** to answer the following question of interest.
+
+**Question of interest**: Are there any differences between the rate of blood flow measurements for babies that do, and do not, suffer from RDS, after correcting for the gestational age?
+
+**TASK**:
+
+1. Produce a scatterplot to explore the relationship between `Lrate` and `GA`, labelled by RDS. Do you think this relationship differs by `RDS`? Which model do you think is most appropriate to describe the data? 
+
+```{r, webex.hide="Solution", out.width="70%", fig.align='center'}
+plot(Lrate ~ GA, pch = RDS, data = rds, ylab = "LRate (log rate of blood flow)",
+     xlab = "Gestational age (Weeks)")
+legend("topleft", legend = c("No RDS", "RDS"), pch = 1:2, bty = "n", cex = 1.2)
+```
+
+2. Build regression models corresponding to different regression lines, parallel regression lines and a single regression line. Based on the ANOVA table, comment on which model is most appropriate. 
+
+`r hide("Hint")`
+Recall that the `lm` command for different regression lines has the form of `lm(Y ~ X1 * X2)` and that for parallel regression lines has the form of `lm(Y ~ X1 + X2)`. 
+`r unhide()`
+
+`r hide("Solution")`
+```{r}
+# different lines model
+Model1 <- lm(Lrate ~ GA * RDS, data = rds)
+anova(Model1)
+
+# parallel lines model
+Model2 <- lm(Lrate ~ GA + RDS, data = rds)
+anova(Model2)
+
+# single regression line model
+Model3 <- lm(Lrate ~ GA, data = rds)
+anova(Model3)
+```
+
+In Model 1, we see that the $p$-value for `GA:RDS` is larger than 0.05, meaning that the interaction term is not statistically significant. Therefore, it is inappropriate to fit different regression lines to this dataset. 
+
+In Model 2, we see that the $p$-value for `RDS` is larger than 0.05, meaning that including the factor `RDS` is not useful in predicting `Lrate`. 
+
+In Model 3, we see that the $p$-value for `GA` is smaller than 0.05, meaning that including `GA` is useful in predicting `Lrate`. Therefore, the most appropriate model, among different regression lines, parallel regression lines and a single regression line, for this dataset is the single regression line model. 
+`r unhide()`
+
+2. Construct confidence intervals to compare the models. 
+
+The 95% confidence interval for $(\beta_1-\beta_2)$ is (`r fitb(c("-0.1751249","-0.175125","-0.17512","-0.1751","-0.175","-0.18"))`, `r fitb(c("0.2652747","0.265275","0.26528","0.2653","0.265","0.27"))`). 
+
+The 95% confidence interval for $\alpha_1 - \alpha_2 + \beta \left(\bar{x}_{2.} - \bar{x}_{1.}\right)$ is (`r fitb(c(-0.5802435,-0.580244,-0.58024,-0.5802,-0.58))`, `r fitb(c(0.8004354,0.800435,0.80044,0.8004,0.8))`). 
+
+Among different regression lines, parallel regression lines and a single regression line, the most appropriate model for this dataset is `r mcq(c("different regression lines", "parallel regression lines", answer="a single regression line"))`,
+
+
+`r hide("Hint")`
+The confidence interval should be constructed for $(\beta_1-\beta_2)$ in order to compare between different regression lines and parallel regression lines. 
+
+The confidence interval should be constructed for $\alpha_1 - \alpha_2 + \beta \left(\bar{x}_{2.} - \bar{x}_{1.}\right)$ in order to compare between parallel regression lines and a single regression line. 
+`r unhide()`
+
+`r hide("Solution")`
+```{r}
+# different lines model
+x1 <- rds$GA[rds$RDS==1]
+x2 <- rds$GA[rds$RDS==2]
+xbar1 <- mean(x1)
+xbar2 <- mean(x2)
+GA <- rds$GA
+GA[rds$RDS==1] <- GA[rds$RDS==1] - xbar1
+GA[rds$RDS==2] <- GA[rds$RDS==2] - xbar2
+Model1_b <- lm(rds$Lrate ~ GA * as.factor(rds$RDS))
+#Remark 1: GA is the centred covariate, rather than the original rds$GA
+#Remark 2: RDS is a factor and we need to tell this information to R by using as.factor(); otherwise R will treat it as a continuous variable.
+summary(Model1_b)
+anova(Model1_b)
+
+# calculate least squares estimates
+y1 <- rds$Lrate[rds$RDS==1]
+y2 <- rds$Lrate[rds$RDS==2]
+ybar1 <- mean(y1)
+ybar2 <- mean(y2)
+Sx1x1 <- sum((x1 - xbar1)^2)
+Sx2x2 <- sum((x2 - xbar2)^2)
+Sx1y1 <- sum((x1 - xbar1) * (y1 - ybar1))
+Sx2y2 <- sum((x2 - xbar2) * (y2 - ybar2))
+print(c(ybar1,Sx1y1/Sx1x1,ybar2,Sx2y2/Sx2x2)) 
+
+# calculate confidence intervals
+RSS <- anova(Model1_b)[4,2]
+n1  <- length(x1)
+n2  <- length(x2)
+t.val <- qt(0.975,df=n1+n2-4)
+ese <- sqrt(RSS/(n1+n2-4)*(1/Sx1x1+1/Sx2x2))
+lower <- -coef(Model1_b)[4] - t.val*ese 
+upper <- -coef(Model1_b)[4] + t.val*ese 
+
+print(c(lower,upper))
+```
+
+The confidence interval for $(\beta_1-\beta_2)$ includes zero, meaning that it is likely that the interaction term does not have any effect in predicting the response variable. Therefore, we would prefer parallel regression lines over different regression lines. 
+
+```{r}
+# parallel lines model
+Model2_b <- lm(rds$Lrate ~ GA + as.factor(rds$RDS))
+summary(Model2_b)
+anova(Model2_b)
+
+# calculate least squares estimates
+print(c(ybar1,ybar2,(Sx1y1+Sx2y2)/(Sx1x1+Sx2x2))) #least squares estimates based on formulae
+Coef <-coef(Model2_b)
+print(c(Coef[1],Coef[1]+Coef[3],Coef[2])) #read least squares estimates from R
+
+# calculate confidence intervals
+Sy1y1 <- sum((y1 - ybar1)^2)
+Sy2y2 <- sum((y2 - ybar2)^2)
+RSS <- anova(Model2_b)[3,2]
+# Sy1y1 + Sy2y2 - (Sx1y1+Sx2y2)^2/(Sx1x1+Sx2x2) #RSS based on formula
+t.val <- qt(0.975, df = n1+n2-3)
+ese <- sqrt(RSS/(n1+n2-3)*(1/n1+1/n2+(xbar2-xbar1)^2/(Sx1x1+Sx2x2)))
+lower <- -coef(Model2_b)[3] + coef(Model2_b)[2]*(xbar2-xbar1) - t.val*ese
+upper <- -coef(Model2_b)[3] + coef(Model2_b)[2]*(xbar2-xbar1) + t.val*ese
+print(c(lower,upper))
+```
+
+The confidence interval for $\alpha_1 - \alpha_2 + \beta \left(\bar{x}_{2.} - \bar{x}_{1.}\right)$ includes zero, meaning that it is likely that `RDS` does not have any effect in predicting `Lrate`. Therefore, we would prefer a single regression line over parallel regression lines.
+`r unhide()`
+
+
+
+
+

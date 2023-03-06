@@ -1,0 +1,9 @@
+fig:CholPlot
+fig:CholPlot2
+welcome-to-s2y-lab-8
+intro
+example-1-cholesterol-levels-in-iowa-and-nebraska
+exploratory-analysis
+statistical-analysis
+confidence-intervals
+example-2-respiratory-distress-syndrome
